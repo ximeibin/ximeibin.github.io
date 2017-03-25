@@ -1,0 +1,789 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Arch安装," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/imgs/favicon.png?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="准备工作由于我是装win10和arch双系统，在win上就分好区，uefi安装和win共用一个ESP分区。
+一、安装介质我是从USTC的源上下载镜像文件的，点击下载。将镜像刻录到u盘，刻录的话Windows系统可以用rufus,Linux系统就用dd好了，完成后重启并设置u盘启动，进入安装环境。
+二、测试网络如果你使用有线网，直接ping任何网站(当然不能是局域网内的)。如果你使用无线网，我的建议">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ArchLinux安装">
+<meta property="og:url" content="http://www.blog.ximeibin.ga/2016/11/11/ArchLinux安装(1)/index.html">
+<meta property="og:site_name" content="Blog of Xi">
+<meta property="og:description" content="准备工作由于我是装win10和arch双系统，在win上就分好区，uefi安装和win共用一个ESP分区。
+一、安装介质我是从USTC的源上下载镜像文件的，点击下载。将镜像刻录到u盘，刻录的话Windows系统可以用rufus,Linux系统就用dd好了，完成后重启并设置u盘启动，进入安装环境。
+二、测试网络如果你使用有线网，直接ping任何网站(当然不能是局域网内的)。如果你使用无线网，我的建议">
+<meta property="og:updated_time" content="2017-03-24T09:13:22.705Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ArchLinux安装">
+<meta name="twitter:description" content="准备工作由于我是装win10和arch双系统，在win上就分好区，uefi安装和win共用一个ESP分区。
+一、安装介质我是从USTC的源上下载镜像文件的，点击下载。将镜像刻录到u盘，刻录的话Windows系统可以用rufus,Linux系统就用dd好了，完成后重启并设置u盘启动，进入安装环境。
+二、测试网络如果你使用有线网，直接ping任何网站(当然不能是局域网内的)。如果你使用无线网，我的建议">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.blog.ximeibin.ga/2016/11/11/ArchLinux安装(1)/"/>
+
+
+
+
+
+  <title> ArchLinux安装 | Blog of Xi </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blog of Xi</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.blog.ximeibin.ga/2016/11/11/ArchLinux安装(1)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="习美斌">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/logo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of Xi">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ArchLinux安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-11T00:00:00+08:00">
+                2016-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Arch/" itemprop="url" rel="index">
+                    <span itemprop="name">Arch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>由于我是装win10和arch双系统，在win上就分好区，uefi安装和win共用一个ESP分区。</p>
+<h3 id="一、安装介质"><a href="#一、安装介质" class="headerlink" title="一、安装介质"></a>一、安装介质</h3><p>我是从USTC的源上下载镜像文件的，<a href="http://mirrors.ustc.edu.cn/archlinux/iso/latest/" target="_blank" rel="external">点击下载</a>。<br>将镜像刻录到u盘，刻录的话Windows系统可以用rufus,Linux系统就用dd好了，完成后重启并设置u盘启动，进入安装环境。</p>
+<h3 id="二、测试网络"><a href="#二、测试网络" class="headerlink" title="二、测试网络"></a>二、测试网络</h3><p>如果你使用有线网，直接ping任何网站(当然不能是局域网内的)。<br>如果你使用无线网，我的建议是使用wifi-menu。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ping www.baidu.com</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="安装基本系统"><a href="#安装基本系统" class="headerlink" title="安装基本系统"></a>安装基本系统</h2><h3 id="一、硬盘分区"><a href="#一、硬盘分区" class="headerlink" title="一、硬盘分区"></a>一、硬盘分区</h3><p>使用lsblk查看硬盘分区<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lsblk</div></pre></td></tr></table></figure></p>
+<p>gpt硬盘分区使用cgdisk<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cgdisk /dev/sdX</div></pre></td></tr></table></figure></p>
+<p>sdXY代表第几块硬盘第几分区，例如sda1代表第一块硬盘第一分区。</p>
+<h3 id="二、格式化分区"><a href="#二、格式化分区" class="headerlink" title="二、格式化分区"></a>二、格式化分区</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkfs.ext4 /dev/sdXY</div><div class="line">mkswap /dev/sdXY  //swap交换空间，内存大的可以不要</div><div class="line">swapon /dev/sdXY  //开启swap交换空间</div></pre></td></tr></table></figure>
+<h3 id="三、挂载分区"><a href="#三、挂载分区" class="headerlink" title="三、挂载分区"></a>三、挂载分区</h3><p>首先将根分区挂载到 /mnt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mount /dev/sdXY /mnt</div></pre></td></tr></table></figure></p>
+<p>如果使用多个分区，还需要为其他分区创建目录并挂载它们（/mnt/boot、/mnt/home、……）。<br>创建/boot,/home并挂载。我是uefi系统/boot挂载到esp分区。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mkdir -p /mnt/&#123;home,boot&#125;</div><div class="line">mount /dev/sdXY /mnt/boot</div><div class="line">mount /dev/sdXY /mnt/home</div></pre></td></tr></table></figure></p>
+<h3 id="四、选择更新源"><a href="#四、选择更新源" class="headerlink" title="四、选择更新源"></a>四、选择更新源</h3><p>使用国内的镜像源可以提高下载速度，缩短安装时间。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sed -i &quot;s/^\b/#/g&quot; /etc/pacman.d/mirrorlist</div><div class="line">nano /etc/pacman.d/mirrorlist</div></pre></td></tr></table></figure></p>
+<p>在/etc/pacman.d/mirrorlist前面加入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Server = http://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch</div><div class="line">Server = http://mirrors.163.com/archlinux/$repo/os/$arch</div></pre></td></tr></table></figure></p>
+<h3 id="五、部署基本系统"><a href="#五、部署基本系统" class="headerlink" title="五、部署基本系统"></a>五、部署基本系统</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacstrap -i /mnt base base-devel</div></pre></td></tr></table></figure>
+<h3 id="六、生成fstab分区信息"><a href="#六、生成fstab分区信息" class="headerlink" title="六、生成fstab分区信息"></a>六、生成fstab分区信息</h3><p>fstab中记录了挂载的相关信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">genfstab -U -p /mnt &gt;&gt; /mnt/etc/fstab</div></pre></td></tr></table></figure></p>
+<p>这里使用的是UUID，如果不加-U，那么在fstab中记录的就是/dev/sdX之类的地址了，UUID的方式更好。</p>
+<h2 id="配置系统"><a href="#配置系统" class="headerlink" title="配置系统"></a>配置系统</h2><p>首先请使用chroot进入部署好的基本系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">arch-chroot /mnt /bin/bash</div></pre></td></tr></table></figure></p>
+<h3 id="一、设置时区"><a href="#一、设置时区" class="headerlink" title="一、设置时区"></a>一、设置时区</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</div></pre></td></tr></table></figure>
+<p>设置UTC时间，由于是和Windows双系统，windows 也要改注册表设为UTC时间，不然时间会相差8小时。关于win改UTC方法可自行百度<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hwclock --systohc --utc</div></pre></td></tr></table></figure></p>
+<h3 id="二、设置Locale"><a href="#二、设置Locale" class="headerlink" title="二、设置Locale"></a>二、设置Locale</h3><p>这里你至少开启en_US.UTF-8和zh_CN.UTF-8,只需移除对应行前面的注释符号（＃）即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nano /etc/locale.gen</div></pre></td></tr></table></figure></p>
+<p>接着执行locale-gen以生成locale讯息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">locale-gen</div></pre></td></tr></table></figure></p>
+<p>创建 locale.conf 并提交您的本地化选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo LANG=en_US.UTF-8 &gt; /etc/locale.conf</div></pre></td></tr></table></figure></p>
+<h3 id="三、设置主机名"><a href="#三、设置主机名" class="headerlink" title="三、设置主机名"></a>三、设置主机名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo 主机名 &gt; /etc/hostname</div></pre></td></tr></table></figure>
+<p>添加对应的信息到hosts:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">nano /etc/hosts</div><div class="line">---------------------</div><div class="line">#&lt;ip-address&gt;   &lt;hostname.domain.org&gt;   &lt;hostname&gt;</div><div class="line">127.0.0.1   localhost.localdomain  localhost    主机名</div><div class="line">::1     localhost.localdomain  localhost    主机名</div></pre></td></tr></table></figure></p>
+<h3 id="四、设置root的密码"><a href="#四、设置root的密码" class="headerlink" title="四、设置root的密码"></a>四、设置root的密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">passwd</div></pre></td></tr></table></figure>
+<h3 id="五、安装引导程序"><a href="#五、安装引导程序" class="headerlink" title="五、安装引导程序"></a>五、安装引导程序</h3><p>UEFI直接使用system-boot<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bootctl install</div></pre></td></tr></table></figure></p>
+<p>首先在/boot/loader/entries文件夹中创建名为arch.conf的配置文件，添加如下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">nano /boot/loader/entries/arch.conf</div><div class="line">---------------------------------------</div><div class="line">title Arch Linux</div><div class="line">linux /vmlinuz-linux</div><div class="line">initrd /initramfs-linux.img</div><div class="line">options root=/dev/sdXY rw</div></pre></td></tr></table></figure></p>
+<p>大致意思根据名字应该就能猜个大概，这里只需要注意root部分可以填写UUID，但是为了图方面，我就直接用路径代替了，sdXY即为root分区，各位需要根据自己的分区情况自行决定。</p>
+<p>接下来需要配置/boot/loader/loader.conf，这个文件有默认的内容，只需要修改下即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">nano /boot/loader/loader.conf</div><div class="line">---------------------------------</div><div class="line">timeout 10</div><div class="line">default arch</div></pre></td></tr></table></figure></p>
+<h3 id="六、配置网络"><a href="#六、配置网络" class="headerlink" title="六、配置网络"></a>六、配置网络</h3><p>这一次的配置是为了让你的新系统能够使用网络。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl enable dhcpcd</div></pre></td></tr></table></figure></p>
+<p>无线网络安装相应的工具才可以使用 iw 和 wifi-menu ：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S iw wpa_supplicant dialog</div></pre></td></tr></table></figure></p>
+<h3 id="七、重启系统"><a href="#七、重启系统" class="headerlink" title="七、重启系统"></a>七、重启系统</h3><p>退出chroot，卸载分区，然后直接reboot。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">exit</div><div class="line">umount -R /mnt</div><div class="line">reboot</div></pre></td></tr></table></figure></p>
+<p>现在已经完成了arch的安装，拔掉u盘重启后，开机会先进入引导界面，选择Arch Linux，按Enter进入，然后就是arch的登录界面，使用root用户登录就可以了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Arch安装/" rel="tag"># Arch安装</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/11/hello-world/" rel="next" title="万物基于 Hello World！">
+                <i class="fa fa-chevron-left"></i> 万物基于 Hello World！
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/12/ArchLinux安装(2)/" rel="prev" title="安装桌面（Gnome&&KDE）">
+                安装桌面（Gnome&&KDE） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/imgs/logo.png"
+               alt="习美斌" />
+          <p class="site-author-name" itemprop="name">习美斌</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ximeibin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ximeibin" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/ximeibin" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、安装介质"><span class="nav-number">1.1.</span> <span class="nav-text">一、安装介质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、测试网络"><span class="nav-number">1.2.</span> <span class="nav-text">二、测试网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装基本系统"><span class="nav-number">2.</span> <span class="nav-text">安装基本系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、硬盘分区"><span class="nav-number">2.1.</span> <span class="nav-text">一、硬盘分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、格式化分区"><span class="nav-number">2.2.</span> <span class="nav-text">二、格式化分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、挂载分区"><span class="nav-number">2.3.</span> <span class="nav-text">三、挂载分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、选择更新源"><span class="nav-number">2.4.</span> <span class="nav-text">四、选择更新源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、部署基本系统"><span class="nav-number">2.5.</span> <span class="nav-text">五、部署基本系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、生成fstab分区信息"><span class="nav-number">2.6.</span> <span class="nav-text">六、生成fstab分区信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置系统"><span class="nav-number">3.</span> <span class="nav-text">配置系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、设置时区"><span class="nav-number">3.1.</span> <span class="nav-text">一、设置时区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、设置Locale"><span class="nav-number">3.2.</span> <span class="nav-text">二、设置Locale</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、设置主机名"><span class="nav-number">3.3.</span> <span class="nav-text">三、设置主机名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、设置root的密码"><span class="nav-number">3.4.</span> <span class="nav-text">四、设置root的密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、安装引导程序"><span class="nav-number">3.5.</span> <span class="nav-text">五、安装引导程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、配置网络"><span class="nav-number">3.6.</span> <span class="nav-text">六、配置网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、重启系统"><span class="nav-number">3.7.</span> <span class="nav-text">七、重启系统</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">习美斌</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
